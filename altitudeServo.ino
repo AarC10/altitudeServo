@@ -7,7 +7,9 @@
 
 Servo myServo;
 int signed angle;
-int altitude;
+int altitudeInt;
+String altitudeString;
+char readChar;
 
 void setup() {
     // Set baud rate
@@ -15,7 +17,7 @@ void setup() {
 
     // Setup servo
     myServo.attach(9); // TODO: Need to figure out pin
-    myServo.write(145); // 145 degrees represents 0 altitude as initial
+    myServo.write(0); // 145 degrees represents 0 altitude as initial
 
 
 }
@@ -29,12 +31,17 @@ int convertAltitudeToDegrees(int altitude) {
 
 
 void loop() {
-    altitude = Serial.read();
-    angle = convertAltitudeToDegrees(altitude);
+
+    while (readChar = Serial.read() != '\n') {
+      if (!isDigit(readChar)) {
+        altitudeString = "";
+      }
+      
+      altitudeString += readChar;
+    }
+    
+    altitudeInt = altitudeString.toInt();
+    angle = convertAltitudeToDegrees(altitudeInt);
     myServo.write(angle);
+    altitudeString = "";
 }
-
-
-
-
-

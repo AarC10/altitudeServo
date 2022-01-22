@@ -35,9 +35,10 @@ void loop() {
     while (readChar = Serial.read() != '\n') {
         if (!isDigit(readChar)) {
             altitudeString = "";
+        } else {
+            altitudeString += readChar;
         }
 
-        altitudeString += readChar;
     }
 
     altitudeInt = altitudeString.toInt();

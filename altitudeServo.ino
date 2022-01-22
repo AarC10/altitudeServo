@@ -33,13 +33,13 @@ int convertAltitudeToDegrees(int altitude) {
 void loop() {
 
     while (readChar = Serial.read() != '\n') {
-      if (!isDigit(readChar)) {
-        altitudeString = "";
-      }
-      
-      altitudeString += readChar;
+        if (!isDigit(readChar)) {
+            altitudeString = "";
+        }
+
+        altitudeString += readChar;
     }
-    
+
     altitudeInt = altitudeString.toInt();
     angle = convertAltitudeToDegrees(altitudeInt);
     myServo.write(angle);

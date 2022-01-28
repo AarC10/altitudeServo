@@ -4,12 +4,14 @@
 #include <Arduino.h>
 #include <Servo.h>
 
-
+const double ALTITUDE_TO_DEGREE_CONVERSION;
 Servo myServo;
 int angle;
 int altitudeInt;
+int degrees;
 String altitudeString;
 char readChar;
+
 
 void setup() {
     // Set baud rate
@@ -24,28 +26,37 @@ void setup() {
 
 int convertAltitudeToDegrees(int altitude) {
     // Converts altitude to degrees that should be written to servo
-    int degrees = map(altitude, 0, 30000, 145, 73);
+    int degrees = map(altitude, 0, 30000, 140, 70);
 
     return degrees;
 }
 
 
 void loop() {
+    
+    while (!Serial.available()) {};
+    
+    readChar = Serial.read();
 
-    while (readChar = Serial.read() != '\n') {
-        if (!isDigit(readChar)) {
-            altitudeString = "";
-        } else {
-            altitudeString += readChar;
+    
+    if (readChar == '\n') {
+
+      
+        altitudeInt = altitudeString.toInt();
+
+        Serial.println(altitudeString);
+        
+
+        if ((0 <= altitudeInt) && (altitudeInt <= 30000)) {
+          Serial.println(altitudeInt);
+          angle = convertAltitudeToDegrees(altitudeInt);  
+          myServo.write(angle);
         }
-
+    
+        altitudeString = "";
+        
+    } else {
+       altitudeString += readChar;
+      
     }
-
-    altitudeInt = altitudeString.toInt();
-    myServo.write(altitudeInt);
-//    angle = convertAltitudeToDegrees(altitudeInt);
-//    Serial.print(angle);
-//    Serial.print('\n');
-//    myServo.write(angle);
-//    altitudeString = "";
 }

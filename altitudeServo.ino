@@ -6,7 +6,7 @@
 
 
 Servo myServo;
-int signed angle;
+int angle;
 int altitudeInt;
 String altitudeString;
 char readChar;
@@ -16,8 +16,8 @@ void setup() {
     Serial.begin(9600);
 
     // Setup servo
-    myServo.attach(9); // TODO: Need to figure out pin
-    myServo.write(0); // 145 degrees represents 0 altitude as initial
+    myServo.attach(8); // TODO: Need to figure out pin
+   // myServo.write(0); // 145 degrees represents 0 altitude as initial
 
 
 }
@@ -42,7 +42,10 @@ void loop() {
     }
 
     altitudeInt = altitudeString.toInt();
-    angle = convertAltitudeToDegrees(altitudeInt);
-    myServo.write(angle);
-    altitudeString = "";
+    myServo.write(altitudeInt);
+//    angle = convertAltitudeToDegrees(altitudeInt);
+//    Serial.print(angle);
+//    Serial.print('\n');
+//    myServo.write(angle);
+//    altitudeString = "";
 }

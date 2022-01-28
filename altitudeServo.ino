@@ -17,7 +17,7 @@ void setup() {
 
     // Setup servo
     myServo.attach(8); // TODO: Need to figure out pin
-   // myServo.write(0); // 145 degrees represents 0 altitude as initial
+    myServo.write(140); // 145 degrees represents 0 altitude as initial
 
 
 }
